@@ -6,10 +6,6 @@ const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config()
 const MONGO_URI = process.env.MONGO_URI;
 
-app.listen(3000, function () {
-    console.log('listening on 3000');
-});
-
 MongoClient.connect(MONGO_URI)
     .then((client) => {
         console.log('Connected to Database');
@@ -23,6 +19,10 @@ MongoClient.connect(MONGO_URI)
         // middleware that handles reading data html froms
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
+
+        app.listen(3000, function () {
+            console.log('listening on 3000');
+        });
 
         app.get('/', (req, res) => {
             db.collection('quotes')
