@@ -2,8 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const MongoClient = require('mongodb').MongoClient;
+const PORT = process.env.PORT || 3000;
 
-require('dotenv').config()
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+  
 const MONGO_URI = process.env.MONGO_URI;
 
 MongoClient.connect(MONGO_URI)
@@ -20,8 +24,8 @@ MongoClient.connect(MONGO_URI)
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(bodyParser.json());
 
-        app.listen(3000, function () {
-            console.log('listening on 3000');
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
         });
 
         app.get('/', (req, res) => {
